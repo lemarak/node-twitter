@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 
+require("./database");
 const index = require("./routes");
 
 const app = express();
