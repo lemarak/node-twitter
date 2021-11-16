@@ -1,6 +1,8 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+const errorHandler = require("errorhandler");
+require("dotenv").config();
 
 require("./database");
 const index = require("./routes");
@@ -17,5 +19,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(index);
+console.log(process.env.NODE_ENV);
+if (process.env.NODE_ENV === "developpment") {
+  app.use(errorHandler());
+} else {
+  app.use((err, req, res, next) => {
+    const code = err.code || 500;
+    res.status(code).json({
+      code: code,
+      message: code === 500 ? "Erreur 500" : err.message,
+    });
+  });
+}
 
 app.listen(port);
