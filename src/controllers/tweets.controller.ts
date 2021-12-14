@@ -54,7 +54,6 @@ exports.tweetEdit = async (req, res, next) => {
 
 exports.tweetUpdate = async (req, res, next) => {
   const tweetId = req.params.tweetId;
-
   try {
     const body = req.body;
     await updateTweet(tweetId, body);

@@ -1,13 +1,15 @@
-const router = require("express").Router();
-const Tweet = require("../database/models/Tweet");
-const {
+import { Router } from "express";
+
+import {
   tweetList,
   tweetNew,
   tweetCreate,
   tweetDelete,
   tweetEdit,
   tweetUpdate,
-} = require("../controllers/tweets.controller");
+} from "../controllers/tweets.controller";
+
+const router = Router();
 
 router.get("/", tweetList);
 router.get("/new", tweetNew);
@@ -16,4 +18,4 @@ router.get("/edit/:tweetId", tweetEdit);
 router.post("/update/:tweetId", tweetUpdate);
 router.delete("/:tweetId", tweetDelete);
 
-module.exports = router;
+export default router;

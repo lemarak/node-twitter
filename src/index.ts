@@ -1,14 +1,15 @@
-const express = require("express");
-const morgan = require("morgan");
-const path = require("path");
-const errorHandler = require("errorhandler");
-require("dotenv").config();
+import express, { Application, Request, Response } from "express";
+import morgan from "morgan";
+import path from "path";
+import errorHandler from "errorhandler";
+import dotenv from "dotenv";
+dotenv.config();
 
-require("./database");
-const index = require("./routes");
+import "./database";
+import index from "./routes";
 
-const app = express();
-const port = process.env.PORT || 3000;
+const app: Application = express();
+const port: string | number = process.env.PORT || 3000;
 
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
@@ -19,11 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(index);
-console.log(process.env.NODE_ENV);
+
 if (process.env.NODE_ENV === "developpment") {
   app.use(errorHandler());
 } else {
-  app.use((err, req, res, next) => {
+  app.use((err: any, _: Request, res: Response) => {
     const code = err.code || 500;
     res.status(code).json({
       code: code,
