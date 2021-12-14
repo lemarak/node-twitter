@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
-const schema = mongoose.Schema;
+import mongoose from "mongoose";
+const Schema = mongoose.Schema;
 
-const tweetSchema = schema({
+const tweetSchema = new Schema({
   content: {
     type: String,
     minlength: [1, "Le tweet est trop court"],
@@ -10,6 +10,4 @@ const tweetSchema = schema({
   },
 });
 
-const Tweet = mongoose.model("tweets", tweetSchema);
-
-module.exports = Tweet;
+export const Tweet = mongoose.model("tweets", tweetSchema);
