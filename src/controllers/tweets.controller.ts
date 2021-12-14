@@ -1,3 +1,5 @@
+import { Request, Response, NextFunction } from "express";
+
 const {
   getTweets,
   getTweet,
@@ -6,7 +8,11 @@ const {
   updateTweet,
 } = require("../queries/tweet.queries");
 
-exports.tweetList = async (req, res, next) => {
+export const tweetList = async (
+  _: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const tweets = await getTweets();
     res.render("tweets/tweet", { tweets });
@@ -15,15 +21,15 @@ exports.tweetList = async (req, res, next) => {
   }
 };
 
-exports.tweetNew = (req, res, next) => {
+export const tweetNew = (_: Request, res: Response) => {
   res.render("tweets/tweet-form", { tweet: {} });
 };
 
-exports.tweetCreate = async (req, res, next) => {
+export const tweetCreate = async (req: Request, res: Response) => {
   try {
     await createTweet(req.body);
     res.redirect("/tweets");
-  } catch (error) {
+  } catch (error: any) {
     const errors = Object.keys(error.errors).map(
       (key) => error.errors[key].message
     );
@@ -31,34 +37,42 @@ exports.tweetCreate = async (req, res, next) => {
   }
 };
 
-exports.tweetDelete = async (req, res, next) => {
+export const tweetDelete = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const tweetId = req.params.tweetId;
     await deleteTweet(tweetId);
     const tweets = await getTweets();
     res.render("tweets/tweet-list", { tweets });
   } catch (error) {
-    next(e);
+    next(error);
   }
 };
 
-exports.tweetEdit = async (req, res, next) => {
+export const tweetEdit = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const tweetId = req.params.tweetId;
     const tweet = await getTweet(tweetId);
     res.render("tweets/tweet-form", { tweet });
   } catch (error) {
-    next(e);
+    next(error);
   }
 };
 
-exports.tweetUpdate = async (req, res, next) => {
+export const tweetUpdate = async (req: Request, res: Response) => {
   const tweetId = req.params.tweetId;
   try {
     const body = req.body;
     await updateTweet(tweetId, body);
     res.redirect("/tweets");
-  } catch (error) {
+  } catch (error: any) {
     const errors = Object.keys(error.errors).map(
       (key) => error.errors[key].message
     );
