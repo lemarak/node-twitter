@@ -1,9 +1,9 @@
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
-require("dotenv").config();
-
 const index = require("./routes");
+require("dotenv").config();
+require("./database");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
