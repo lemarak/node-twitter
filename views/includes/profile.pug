@@ -1,1 +1,16 @@
-p profile user
+div(class="profile-container bg-white mr-3 d-flex flex-column")
+    div(class="d-flex flex-row justify-content-center align-items-center")
+      img(src="/img/avatardefault.svg" class="img-fluid")
+    div(class="d-flex flex-row justify-content-center align-items-center my-3")
+      p= `${ currentUser.username } (${ currentUser.local.email })`
+    div(class="text-center d-flex flex-row justify-content-center align-items-center my-3")
+      div(class="flex-fill")
+        p
+          strong Tweet
+          br
+          span(class="text-primary")= tweets && tweets.length ? tweets.length : "-"
+      div(class="flex-fill")
+        p
+          strong Following
+          br
+          span(class="text-primary") -
